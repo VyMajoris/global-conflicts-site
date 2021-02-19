@@ -3,17 +3,17 @@
 		<div class='not-allowed-text' *ngIf='!(discordUser && discordUser.role)'>You must join our Discord server and
 			complete the welcoming process to upload missions!
 		</div>
-		<div class="column" [class.not-allowed-overlay]="!(discordUser && discordUser.role)">
-			<mat-vertical-stepper class="field-container" [linear]="true" #stepper>
-				<mat-step [stepControl]="fileUploadGroup">
-					<form [formGroup]="fileUploadGroup">
+		<div class='column' [class.not-allowed-overlay]='!(discordUser && discordUser.role)'>
+			<mat-vertical-stepper class='field-container' [linear]='true' #stepper>
+				<mat-step [stepControl]='fileUploadGroup'>
+					<form [formGroup]='fileUploadGroup'>
 						<ng-template matStepLabel>Mission File</ng-template>
 						<div>
 							<mat-form-field>
-								<mat-label class="inset-label" for="file-input">Select Mission .pbo</mat-label>
-								<ngx-mat-file-input formControlName="missionFile" valuePlaceholder="No file selected"
-									[required]="true" [accept]="'.pbo'" #missionFile
-									(change)="missionToUpload = $any($event.target).files[0]; buildMissionFileName()">
+								<mat-label class='inset-label' for='file-input'>Select Mission .pbo</mat-label>
+								<ngx-mat-file-input formControlName='missionFile' valuePlaceholder='No file selected'
+																		[required]='true' [accept]="'.pbo'" #missionFile
+																		(change)='missionToUpload = $any($event.target).files[0]; buildMissionFileName()'>
 								</ngx-mat-file-input>
 								<mat-icon color='white' matSuffix>folder</mat-icon>
 								<button mat-icon-button *ngIf='!missionFile.empty'
@@ -32,10 +32,10 @@
 						<ng-template matStepLabel>Mission Name</ng-template>
 						<div>
 							<mat-form-field>
-								<mat-label class="inset-label">Mission Name</mat-label>
-								<input matInput formControlName="missionName" maxlength="31"
-									placeholder="Operation Boomstick" required autocomplete="off"
-									(ngModelChange)="buildMissionFileName()">
+								<mat-label class='inset-label'>Mission Name</mat-label>
+								<input matInput formControlName='missionName' maxlength='31'
+											 placeholder='Operation Boomstick' required autocomplete='off'
+											 (ngModelChange)='buildMissionFileName()'>
 								<mat-error>{{getNameErrorMessage()}}</mat-error>
 							</mat-form-field>
 						</div>
@@ -45,16 +45,16 @@
 				<mat-step [stepControl]='missionTypeGroup'>
 					<form [formGroup]='missionTypeGroup'>
 						<ng-template matStepLabel>Mission Type</ng-template>
-						<div class="mt-2">
-							<mat-radio-group formControlName="missionType" #missionType
-								(ngModelChange)="selectMissionType(); buildMissionFileName()" required>
-								<mat-radio-button *ngFor="let type of mC.MissionTypes" [value]="type">
+						<div class='mt-2'>
+							<mat-radio-group formControlName='missionType' #missionType
+															 (ngModelChange)='selectMissionType(); buildMissionFileName()' required>
+								<mat-radio-button *ngFor='let type of mC.MissionTypes' [value]='type'>
 									{{type.title}}
 								</mat-radio-button>
 							</mat-radio-group>
-							<mat-slide-toggle style="display: flex;" formControlName="ratioLOL"
-								*ngIf="missionTypeGroup.get('missionType')?.value?.title == 'LOL'" class="mb-4 mt-4" L
-								(change)="ratioOverride()">
+							<mat-slide-toggle style='display: flex;' formControlName='ratioLOL'
+																*ngIf="missionTypeGroup.get('missionType')?.value?.title == 'LOL'" class='mb-4 mt-4' L
+																(change)='ratioOverride()'>
 								Team Ratios
 							</mat-slide-toggle>
 						</div>
@@ -67,61 +67,61 @@
 						<ng-template matStepLabel>Player Count</ng-template>
 						<div>
 							<mat-form-field>
-								<mat-label class="inset-label">Minimum Players</mat-label>
-								<input matInput formControlName="minPlayers" autocomplete="off" placeholder="10"
-									type="number" maxlength="3" (ngModelChange)="buildMissionFileName()">
+								<mat-label class='inset-label'>Minimum Players</mat-label>
+								<input matInput formControlName='minPlayers' autocomplete='off' placeholder='10'
+											 type='number' maxlength='3' (ngModelChange)='buildMissionFileName()'>
 							</mat-form-field>
 							<mat-form-field>
-								<mat-label class="inset-label">Maximum Players</mat-label>
-								<input matInput formControlName="maxPlayers" autocomplete="off" placeholder="22"
-									type="number" maxlength="3" (ngModelChange)="buildMissionFileName()">
+								<mat-label class='inset-label'>Maximum Players</mat-label>
+								<input matInput formControlName='maxPlayers' autocomplete='off' placeholder='22'
+											 type='number' maxlength='3' (ngModelChange)='buildMissionFileName()'>
 							</mat-form-field>
 							<mat-error>{{ getSizeErrorMessage() }}</mat-error>
 						</div>
-						<mat-label *ngIf='getIfTVT()' class='inset-label row'>Side Ratios:</mat-label>
-						<div *ngIf='getIfTVT()' style='display: flex'>
-							<mat-checkbox formControlName='ratioBluforE' class='inset-label' style='align-self: center'>BLUFOR:
+						<mat-label [hidden]='!getIfTVT()' class='inset-label row'>Side Ratios:</mat-label>
+						<div [hidden]='!getIfTVT()' style='display: flex'>
+							<mat-checkbox formControlName='ratioBluforE' (change)='onRatioEnabledChange("ratioBlufor")'
+														class='inset-label' style='align-self: center'>BLUFOR:
 							</mat-checkbox>
 							<mat-slider
 								formControlName='ratioBlufor'
 								class='blueSlider column'
-								[disabled]="!(missionSizeGroup.get('ratioBluforE')?.value ? missionSizeGroup.get('ratioBluforE')?.value : false)"
 								[thumbLabel]='true'
 								[vertical]='true'
 								[step]='0.1'
 								[min]='1'
 								[max]='5'
 							></mat-slider>
-							<mat-checkbox formControlName='ratioOpforE' class='inset-label' style='align-self: center'> OPFOR:
+							<mat-checkbox formControlName='ratioOpforE' (change)='onRatioEnabledChange("ratioOpfor")'
+														class='inset-label' style='align-self: center'> OPFOR:
 							</mat-checkbox>
 							<mat-slider
 								formControlName='ratioOpfor'
 								class='redSlider column'
-								[disabled]="!(missionSizeGroup.get('ratioOpforE')?.value ? missionSizeGroup.get('ratioOpforE')?.value : false)"
 								[thumbLabel]='true'
 								[vertical]='true'
 								[step]='0.1'
 								[min]='1'
 								[max]='5'
 							></mat-slider>
-							<mat-checkbox formControlName='ratioIndforE' class='inset-label' style='align-self: center'>INDFOR:
+							<mat-checkbox formControlName='ratioIndforE' (change)='onRatioEnabledChange("ratioIndfor")'
+														class='inset-label' style='align-self: center'>INDFOR:
 							</mat-checkbox>
 							<mat-slider
 								formControlName='ratioIndfor'
 								class='greenSlider column'
-								[disabled]="!(missionSizeGroup.get('ratioIndforE')?.value ? missionSizeGroup.get('ratioIndforE')?.value : false)"
 								[thumbLabel]='true'
 								[vertical]='true'
 								[step]='0.1'
 								[min]='1'
 								[max]='5'
 							></mat-slider>
-							<mat-checkbox formControlName='ratioCivE' class='inset-label' style='align-self: center'> CIVILIAN:
+							<mat-checkbox formControlName='ratioCivE' (change)='onRatioEnabledChange("ratioCiv")' class='inset-label'
+														style='align-self: center'> CIVILIAN:
 							</mat-checkbox>
 							<mat-slider
 								formControlName='ratioCiv'
 								class='yellowSlider column'
-								[disabled]="!(missionSizeGroup.get('ratioCivE')?.value ? missionSizeGroup.get('ratioCivE')?.value : false)"
 								[thumbLabel]='true'
 								[vertical]='true'
 								[step]='0.1'
@@ -210,11 +210,11 @@
 								Custom Mission Image
 							</mat-slide-toggle>
 							<mat-form-field *ngIf="fileImageGroup.get('imgToggle')?.value">
-								<mat-label class="inset-label" for="file-input">Select Image</mat-label>
-								<ngx-mat-file-input formControlName="missionImage" valuePlaceholder="No file selected"
-									[accept]="'.png, .jpg, .jpeg'" #missionImage
-									(change)="missionImageFile = $any($event.target).files[0]; setImagePreview($any($event.target).files[0])"
-									[required]="true">
+								<mat-label class='inset-label' for='file-input'>Select Image</mat-label>
+								<ngx-mat-file-input formControlName='missionImage' valuePlaceholder='No file selected'
+																		[accept]="'.png, .jpg, .jpeg'" #missionImage
+																		(change)='missionImageFile = $any($event.target).files[0]; setImagePreview($any($event.target).files[0])'
+																		[required]='true'>
 								</ngx-mat-file-input>
 								<mat-icon color='white' matSuffix>add_photo_alternate</mat-icon>
 								<button mat-icon-button *ngIf='!missionImage.empty'
@@ -231,19 +231,23 @@
 				<mat-step>
 					<ng-template matStepLabel>Submit</ng-template>
 					<div>
+
 						<button mat-button
-							[disabled]="sharedService.uploadingState!='ready' && sharedService.uploadingState!='error'"
-							(click)="submitMission()">Submit Mission</button>
+										[disabled]='sharedService.uploadingState!=null'
+										(click)='submitMission()'>Submit Mission
+						</button>
 					</div>
-					<div class="upload-result">
-						<div class="result-error" *ngIf="sharedService.uploadingState=='error'">Failed to upload mission
+					<div class='upload-result'>
+						<div class='result-error' *ngIf="sharedService.uploadingState=='error'">Failed to upload mission
 						</div>
-						<div class="name-conflict" *ngIf="sharedService.uploadingState=='name-conflict'">A mission with
+						<div class='name-conflict' *ngIf="sharedService.uploadingState=='name-conflict'">A mission with
 							this name on
-							this terrain already exists!</div>
-						<div class="result-uploading" *ngIf="sharedService.uploadingState=='uploading'">Uploading
-							mission...</div>
-						<div class="result-success" *ngIf="sharedService.uploadingState=='success'"> Mission uploaded!
+							this terrain already exists!
+						</div>
+						<div class='result-uploading' *ngIf="sharedService.uploadingState=='uploading'">Uploading
+							mission...
+						</div>
+						<div class='result-success' *ngIf="sharedService.uploadingState=='success'"> Mission uploaded!
 						</div>
 					</div>
 					<div class='upload-result'>

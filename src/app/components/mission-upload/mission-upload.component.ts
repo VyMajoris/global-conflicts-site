@@ -744,4 +744,12 @@ export class MissionUploadComponent implements OnInit {
 			}
 		);
 	}
+
+	onRatioEnabledChange(controlName: string) {
+		if (this.missionSizeGroup.get(controlName)?.enabled) {
+			this.missionSizeGroup.get(controlName)?.disable();
+		} else {
+			this.missionSizeGroup.get(controlName)?.enable();
+		}
+	}
 }
