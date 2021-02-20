@@ -113,7 +113,7 @@
 					</button>
 				</div>
 			</div>
-			<table mat-table #updatesTable #updatesSort='matSort' [dataSource]='this.dataSourceUpdates' class='matTable'
+			<table mat-table #updatesSort='matSort' [dataSource]='this.dataSourceUpdates' class='matTable'
 						 matSort style='width: 100%;'>
 				<ng-container matColumnDef='date'>
 					<th mat-header-cell *matHeaderCellDef mat-sort-header> Date</th>
@@ -213,7 +213,7 @@
 					</button>
 				</div>
 			</div>
-			<table mat-table #bugReportsTable #reportsSort='matSort' [dataSource]='this.dataSourceReports'
+			<table mat-table #reportsSort='matSort' [dataSource]='this.dataSourceReports'
 						 class='matTable' matSort style='width: 100%;'>
 				<ng-container matColumnDef='date'>
 					<th mat-header-cell *matHeaderCellDef mat-sort-header> Date</th>
@@ -257,7 +257,7 @@
 					</button>
 				</div>
 			</div>
-			<table mat-table #reviewsTable #reviewsSort='matSort' [dataSource]='this.dataSourceReviews' class='matTable'
+			<table mat-table #reviewsSort='matSort' [dataSource]='this.dataSourceReviews' class='matTable'
 						 matSort style='width: 100%;'>
 				<ng-container matColumnDef='date'>
 					<th mat-header-cell *matHeaderCellDef mat-sort-header> Date</th>
