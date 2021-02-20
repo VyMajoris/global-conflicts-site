@@ -37,9 +37,9 @@ export class MissionDetailsComponent implements OnInit {
 		private sharedService: SharedService,
 		private route: ActivatedRoute,
 		public dialog: MatDialog,
-		public overlay: Overlay,
-		private router: Router
+		public overlay: Overlay
 	) {}
+
 	discordUser: DiscordUser | null;
 	mission: IMission | null;
 	dataSourceUpdates: MatTableDataSource<IUpdate>;
@@ -165,10 +165,7 @@ export class MissionDetailsComponent implements OnInit {
 		});
 	}
 
-	public submitBugReport(
-		mission: IMission | null = this.mission,
-		table = this.bugReportsTable
-	) {
+	public submitBugReport(mission: IMission | null = this.mission) {
 		const dialogRef = this.dialog.open(DialogSubmitBugReportComponent, {
 			data: mission,
 			scrollStrategy: this.overlay.scrollStrategies.noop(),
@@ -191,10 +188,7 @@ export class MissionDetailsComponent implements OnInit {
 		});
 	}
 
-	public submitReview(
-		mission: IMission | null = this.mission,
-		table = this.reviewsTable
-	) {
+	public submitReview(mission: IMission | null = this.mission) {
 		const dialogRef = this.dialog.open(DialogSubmitReviewComponent, {
 			data: mission,
 			scrollStrategy: this.overlay.scrollStrategies.noop(),
