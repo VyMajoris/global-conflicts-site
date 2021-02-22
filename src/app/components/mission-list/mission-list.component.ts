@@ -40,6 +40,7 @@ export class MissionListComponent implements OnInit {
 	filterGroup: FormGroup;
 	userList: string[];
 	terrainList: string[];
+	doneLoading = false;
 
 	constructor(
 		public missionsService: MissionsService,
@@ -112,6 +113,7 @@ export class MissionListComponent implements OnInit {
 				}
 			};
 			this.dataSource.sort = this.sort;
+			this.doneLoading = true;
 		});
 	}
 
